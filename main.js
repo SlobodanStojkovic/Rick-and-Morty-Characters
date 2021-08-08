@@ -1,4 +1,23 @@
 const gallery = document.querySelector('.gallery');
+const leftPages = document.querySelector('.leftArrows');
+const rightPages = document.querySelector('.rightArrows');
+
+let pageNumber = 5;
+
+let page1 = document.querySelector(".page1");
+let page2 = document.querySelector(".page2");
+let page3 = document.querySelector(".page3");
+let page4 = document.querySelector(".page4");
+let page5 = document.querySelector(".page5");
+
+const pageNumbers = () => {
+    page1.textContent = pageNumber - 4;
+    page2.textContent = pageNumber - 3;
+    page3.textContent = pageNumber - 2;
+    page4.textContent = pageNumber - 1;
+    page5.textContent = pageNumber;
+}
+pageNumbers();
 
 const getRickAndMorty = url => {
     fetch(url)
@@ -56,15 +75,14 @@ const getRickAndMorty = url => {
 }
 getRickAndMorty("https://rickandmortyapi.com/api/character");
 
+const createNewPage = () => {
+    const page = document.createElement("li");
+    page.textContent = parseInt(document.querySelector(".pagination").previousSibling.textContent) + 1;
+    page.append(document.querySelector(".pagination"));
+}
 
-let page1 = document.querySelector(".page1");
-let page2 = document.querySelector(".page2");
-let page3 = document.querySelector(".page3");
-let page4 = document.querySelector(".page4");
-let page5 = document.querySelector(".page5");
 
 let selectLi = document.querySelectorAll(".page");
-
 
 const removeGreen = page => {
     selectLi.forEach(element => {
@@ -74,30 +92,52 @@ const removeGreen = page => {
     li.classList.add("bg-success");
 }
 
+
 page1.addEventListener("click", function () {
-    getRickAndMorty("https://rickandmortyapi.com/api/character");
+    getRickAndMorty("https://rickandmortyapi.com/api/character?page=" + (pageNumber - 4));
     removeGreen(".page1");
 })
 
 page2.addEventListener("click", function () {
-    getRickAndMorty("https://rickandmortyapi.com/api/character?page=2");
+    getRickAndMorty("https://rickandmortyapi.com/api/character?page=" + (pageNumber - 3));
     removeGreen(".page2");
 })
 
 page3.addEventListener("click", function () {
-    getRickAndMorty("https://rickandmortyapi.com/api/character?page=3");
+    getRickAndMorty("https://rickandmortyapi.com/api/character?page=" + (pageNumber - 2));
     removeGreen(".page3");
 })
 
 page4.addEventListener("click", function () {
-    getRickAndMorty("https://rickandmortyapi.com/api/character?page=4");
+    getRickAndMorty("https://rickandmortyapi.com/api/character?page=" + (pageNumber - 1));
     removeGreen(".page4");
 })
 
 page5.addEventListener("click", function () {
-    getRickAndMorty("https://rickandmortyapi.com/api/character?page=5");
-    removeGreen(".page5");
+    if (pageNumber !== 35) {
+        getRickAndMorty("https://rickandmortyapi.com/api/character?page=" + (pageNumber));
+        removeGreen(".page5");
+    }
 })
 
+leftPages.addEventListener("click", function () {
+    if (pageNumber > 5) {
+        pageNumber -= 5;
+        pageNumbers();
+    }
+    selectLi.forEach(element => {
+        element.classList.remove("bg-success");
+    });
+})
+
+rightPages.addEventListener("click", function () {
+    if (pageNumber < 35) {
+        pageNumber += 5;
+        pageNumbers();
+    }
+    selectLi.forEach(element => {
+        element.classList.remove("bg-success");
+    });
+})
 
 
