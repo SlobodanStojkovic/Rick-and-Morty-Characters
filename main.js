@@ -1,14 +1,17 @@
 const gallery = document.querySelector('.gallery');
 const leftPages = document.querySelector('.leftArrows');
 const rightPages = document.querySelector('.rightArrows');
+const selectLi = document.querySelectorAll(".page");
+
+const page1 = document.querySelector(".page1");
+const page2 = document.querySelector(".page2");
+const page3 = document.querySelector(".page3");
+const page4 = document.querySelector(".page4");
+const page5 = document.querySelector(".page5");
+
 
 let pageNumber = 5;
 
-let page1 = document.querySelector(".page1");
-let page2 = document.querySelector(".page2");
-let page3 = document.querySelector(".page3");
-let page4 = document.querySelector(".page4");
-let page5 = document.querySelector(".page5");
 
 const pageNumbers = () => {
     page1.textContent = pageNumber - 4;
@@ -18,6 +21,7 @@ const pageNumbers = () => {
     page5.textContent = pageNumber;
 }
 pageNumbers();
+
 
 const getRickAndMorty = url => {
     fetch(url)
@@ -75,14 +79,6 @@ const getRickAndMorty = url => {
 }
 getRickAndMorty("https://rickandmortyapi.com/api/character");
 
-const createNewPage = () => {
-    const page = document.createElement("li");
-    page.textContent = parseInt(document.querySelector(".pagination").previousSibling.textContent) + 1;
-    page.append(document.querySelector(".pagination"));
-}
-
-
-let selectLi = document.querySelectorAll(".page");
 
 const removeGreen = page => {
     selectLi.forEach(element => {
@@ -120,6 +116,8 @@ page5.addEventListener("click", function () {
     }
 })
 
+
+
 leftPages.addEventListener("click", function () {
     if (pageNumber > 5) {
         pageNumber -= 5;
@@ -130,6 +128,7 @@ leftPages.addEventListener("click", function () {
     });
 })
 
+
 rightPages.addEventListener("click", function () {
     if (pageNumber < 35) {
         pageNumber += 5;
@@ -139,5 +138,4 @@ rightPages.addEventListener("click", function () {
         element.classList.remove("bg-success");
     });
 })
-
 
